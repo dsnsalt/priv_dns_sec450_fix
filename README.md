@@ -6,19 +6,23 @@ Use if there are DNS restrictions on your network that prevents starting pi-hole
 
 ## Download and Run
 
-### Requirements
-
-- Ensure Network adapter is set to `NAT` or `Bridged`
-- Must be run before the **Exercise Preparation** step of Lab 2.1
-
 ```
-sudo systemctl start systemd-resolved
 wget https://raw.githubusercontent.com/dsnsalt/priv_dns_sec450_fix/main/pihole-start-fix.sh -O /labs/pihole-start-fix.sh
 cd /labs
 chmod +x pihole-start-fix.sh
 ./pihole-start-fix.sh
 ```
 
+### Requirements
+
+- Ensure Network adapter is set to `NAT` or `Bridged`
+- Must be run before the **Exercise Preparation** step of Lab
+    - If running after the **Exercise Preparation** step, run the `reset_vm.sh` script and the attempt to run the above commands again
+    ```
+    /labs/reset_vm.sh 
+    ```
+    - Once the script has been downloaded and run, repeat the steps in the **Exercise Preparation** step
+    
 ## Usage
 
 ### Apply Fix
