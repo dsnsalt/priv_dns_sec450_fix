@@ -6,7 +6,10 @@ Use if there are DNS restrictions on your network that prevents starting pi-hole
 
 ## Download and Run
 
-- Run prior to running lab 2.1
+### Requirements
+
+- Ensure Network adapter is set to `NAT` or `Bridged`
+- Must be run before the **Exercise Preparation** step of Lab 2.1
 
 ```
 sudo systemctl start systemd-resolved
