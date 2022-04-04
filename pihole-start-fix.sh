@@ -33,7 +33,7 @@ function helper() {
         *)
             echo "Usage: pihole-start-fix.sh OPTION [IP-ADDRESS]"
             echo -e "Options:\n"
-            echo "apply                     Apply the fix using the VM's default DNS server."
+            echo "apply                     Apply the fix using the VM's default DNS server. Default option."
             echo "reset                     Remove the defined DNS servers and use the default configuration."
             echo "override [IP-ADDRESS]     Override the default use of the VM's default DNS server and specify the DNS server IPv4 address to use.";;
     esac
