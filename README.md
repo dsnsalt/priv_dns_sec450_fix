@@ -50,11 +50,6 @@ Fix applied to 2.1
 Fix applied to 5.3
 ```
 
-- Configs will be updated to use the same DNS as your host system instead of Google's
-
-- You will be asked for the DNS Server you got from your host machine
-
-
 - Configs will be updated to use the same DNS as your VM instead of Google's.
 
 ### Undo Fix
