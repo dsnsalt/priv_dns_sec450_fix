@@ -46,7 +46,10 @@ then
         case $1 in
             apply | reset) if ! [ -z $2 ]
                 then
-                    echo -e "$1 option does not use an argument.\n"
+                    if ! ([ $2 = "help" ] || [ $2 = "--help" ] || [ $2 = "-h" ])
+                    then
+                        echo -e "$1 option does not use an option.\n"
+                    fi
                     helper
                     exit
                 else
@@ -94,7 +97,7 @@ then
 
     if [ $(egrep -A5 "dns|WEBPASSWORD" /labs/2.1/docker-compose.yaml /labs/5.3/docker-compose.yaml | grep -iv "#Restricted DNS Fix" | grep $usrIP -c) -gt 0 ]
     then
-        echo "Cannot use $usrIP as the DNS server, it already exists as a DNS server in the compose file"
+        echo "Cannot use $usrIP as the DNS server, it already exists as a DNS server in the lab config file"
         exit
     fi
 fi
