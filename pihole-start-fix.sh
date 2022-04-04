@@ -42,46 +42,40 @@ function helper() {
 # Check if option has been defined. If not, assume the apply action
 if [ ! -z $1 ]
 then
-    # Loop through the options to use full word arguments instead of letter
-    while [ $# -gt 0 ]
-    do
-        case $1 in
-            apply | reset) 
-                # Ensure the apply and reset options are not followed by an argument
-                if ! [ -z $2 ]
+    case $1 in
+        apply | reset) 
+            # Ensure the apply and reset options are not followed by an argument
+            if ! [ -z $2 ]
+            then
+                # If the argument is not help, display an error and then display the help
+                if ! ([ $2 = "help" ] || [ $2 = "--help" ] || [ $2 = "-h" ])
                 then
-                    # If the argument is not help, display an error and then display the help
-                    if ! ([ $2 = "help" ] || [ $2 = "--help" ] || [ $2 = "-h" ])
-                    then
-                        echo -e "$1 option does not use an option.\n"
-                    fi
-                    helper
-                    exit
-                else
-                    action=$1
-                fi;;
-            override) 
-                # Check if there is a argument following override option
-                # If there isn't or the argument calls help, display the help
-                if [ -z $2 ] || [ $2 = "help" ] || [ $2 = "--help" ] || [ $2 = "-h" ]
+                    echo -e "$1 option does not use an option.\n"
+                fi
+                helper
+                exit
+            else
+                action=$1
+            fi;;
+        override) 
+            # Check if there is a argument following override option
+            # If there isn't or the argument calls help, display the help
+            if [ -z $2 ] || [ $2 = "help" ] || [ $2 = "--help" ] || [ $2 = "-h" ]
+            then
+                if [ -z $2 ]
                 then
-                    if [ -z $2 ]
-                    then
-                        echo -e "IP argument cannot be empty"
-                    fi
-                    helper "override"
-                    exit
-                else
-                    action="$1"
-                    usrIP=$2
-                    break
-                fi;;
-            
-            *) helper
-                exit;;
-        esac
-        shift
-    done
+                    echo -e "IP argument cannot be empty"
+                fi
+                helper "override"
+                exit
+            else
+                action="$1"
+                usrIP=$2
+            fi;;
+        
+        *) helper
+            exit;;
+    esac
 else
     action="apply"
 fi
