@@ -50,11 +50,12 @@ Fix applied to 2.1
 Fix applied to 5.3
 ```
 
-- Configs will be updated to use the same DNS as your VM instead of Google's.
+Configs will be updated to use the same DNS as your VM instead of Google's.
 
 ### Undo Fix
 
-- Running the script with the `reset` option will remove the fix.
+Running the script with the `reset` option will remove the fix.
+
 ```
 /labs/pihole-start-fix.sh reset
 ```
@@ -65,11 +66,11 @@ Fix has been removed from 2.1
 Fix has been removed from 5.3
 ```
 
-- Configs will be updated to remove any fixes that were implemented.
+Configs will be updated to remove any fixes that were implemented.
 
 ### Overide
 
-- To override the use of the VM's DNS server, use the `override` option and provide an IPv4 address as an argument.
+To override the use of the VM's DNS server, use the `override` option and provide an IPv4 address as an argument.
 
 ```
 /labs/pihole-start-fix.sh override <IPv4 Address>
@@ -87,29 +88,33 @@ Fix applied to 5.3
 
 ### Requesting IP Address
 
-- Occurs during the use of the `apply` or `override` options.
+Occurs during the use of the `apply` or `override` options.
 
 ```
-Specify a valid DNS IP address: 192.168.0.50 <--- Replace with IPv4 address
+Specify a valid DNS IP address: 
 ```
 
 **Reason**:
-    - The VM's DNS or the supplied DNS address cannot be queried for a record or is not a valid IPv4 address.
+
+- The VM's DNS or the supplied DNS address cannot be queried for a record or is not a valid IPv4 address.
 
 **Fix**:
-    - Check that the DNS configuration on the VM and ensure that the resolver service has a valid address.
-    - On the host machine (not the VM), get the DNS server that host uses and enter it instead of the VM's DNS.
+
+- Check that the DNS configuration on the VM and ensure that the resolver service has a valid address.
+- On the host machine (not the VM), get the DNS server that host uses and enter it instead of the VM's DNS.
 
 ### IP Already Exists
 
-- Occurs during the use of the `apply` or `override` options.
+Occurs during the use of the `apply` or `override` options.
 
 ```
 Cannot use 192.168.0.50 as the DNS server, it already exists as a DNS server in the lab config file
 ```
 
 **Reason**:
-    - The IP from the VM or the provided override IP already exists in the VM.
+
+- The IP from the VM or the provided override IP already exists in the VM.
 
 **Fix**:
-    - Specify a different VM or reset the labs use the lab reset script.
+
+- Specify a different VM or reset the labs use the lab reset script.
