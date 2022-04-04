@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 # DNS fix for private networks that do not allow DNS requests to external servers
 # Course Version: SEC450_2_G01_01
