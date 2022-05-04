@@ -86,7 +86,7 @@ then
     # Ensure the DNS IP is a valid IPv4 IP and that it is a DNS server
     # If fails any test ask for a new IP from the user
     while [ -z $usrIP ] || check_valid_ip $usrIP || 
-        [ $(dig @"$usrIP" sec450.com A +time=1 +tries=1 | grep "connection timed out" -c) -gt 0 ]
+        [ $(dig @"$usrIP" sec450.com A +time=10 +tries=1 | grep "connection timed out" -c) -gt 0 ]
     do
         # Get default gateway as an alternative to the DNS server configured on the VM
         defGateway=$(ip route show default | grep -Po 'default via \K(\d{1,3}\.){3}\d{1,3}')
