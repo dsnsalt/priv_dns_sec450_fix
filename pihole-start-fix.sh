@@ -4,24 +4,12 @@
 # Course Version: SEC450_2_G01_01
 
 function check_valid_ip() {
-	ipRegex='^[0-9]{1,3}(\.[0-9]{1,3}){3}$'
+	ipRegex='^(([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[.]){3}([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5]))$'  
     if [[ $1 =~ $ipRegex ]]
     then
-		bIFS=$IFS
-		IFS='.'
-		read -ra ipArr <<< "$1"
-		for octet in "${ipArr[@]}"
-		do
-			if ! [ $(("$octet" >= 0)) == $(("$octet" <= 255)) ]
-			then
-				return 0
-			fi
-		done
-		IFS=$bIFS
-	else
-		return 0
+		return 1
 	fi
-	return 1
+	return 0
 }
 
 function helper() {
