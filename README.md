@@ -31,7 +31,7 @@ $ pihole-start-fix.sh <option> [IP ADDRESS]
 
 ### Options
 
-- **apply**: Apply the fix using the VM's default DNS server. Default option.
+- **apply**: Apply the fix using the VM's default DNS server of Default Gateway. Default option.
 - **reset**: Remove the defined DNS servers and use the default configuration.
 - **override**: Override the default use of the VM's default DNS server and specify the DNS server IPv4 address to use.
     - Requires an IPv4 address to be supplied when invoking.
