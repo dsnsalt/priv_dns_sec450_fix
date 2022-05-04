@@ -76,6 +76,7 @@ defGatewayFlag=false
 # Get the DNS server used by the VM
 if [ $action = "apply" ]
 then
+    echo "Attempting to use system DNS server as replacement DNS for Pihole container."
     usrIP=$(systemd-resolve --status | grep -m1 -Po 'DNS Servers: \K(\d{1,3}\.){3}\d{1,3}')
 fi
 
@@ -92,6 +93,7 @@ then
         # Do not attempt gateway substitution unless action is apply, the gateway and DNS are not equal and if not attempted before
         if [ $action == "apply" ] && ! [ $defGateway == $usrIP ] && ! $defGatewayFlag
         then
+            echo "System DNS server failed. Attempting to use Default Gateway address as replacement DNS for Pihole container."
             usrIP=$defGateway
             defGatewayFlag=true
         else
