@@ -4,7 +4,7 @@
 # Course Version: SEC450_2_G01_01
 
 function check_valid_ip() {
-	ipRegex='^(([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[.]){3}([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5]))$'  
+	ipRegex='^(([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[.]){3}([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])$'  
     if [[ $1 =~ $ipRegex ]]
     then
 		return 1
@@ -71,6 +71,8 @@ fi
 # Lab array
 labs=("2.1" "5.3")
 
+# Default Gateway flag to trigger attempt with default gateway if DNS server fails
+defGatewayFlag=false
 # Get the DNS server used by the VM
 if [ $action = "apply" ]
 then
@@ -85,8 +87,17 @@ then
     while [ -z $usrIP ] || check_valid_ip $usrIP || 
         [ $(dig @"$usrIP" sec450.com A +time=1 +tries=1 | grep "connection timed out" -c) -gt 0 ]
     do
-        echo "IP cannot be used or DNS server cannot be reached."
-        read -p "Specify a valid DNS address: " usrIP
+        # Get default gateway as an alternative to the DNS server configured on the VM
+        defGateway=$(ip route show default | grep -Po 'default via \K(\d{1,3}\.){3}\d{1,3}')
+        # Do not attempt gateway substitution unless action is apply, the gateway and DNS are not equal and if not attempted before
+        if [ $action == "apply" ] && ! [ $defGateway == $usrIP ] && ! $defGatewayFlag
+        then
+            usrIP=$defGateway
+            defGatewayFlag=true
+        else
+            echo "IP cannot be used or DNS server cannot be reached."
+            read -p "Specify a valid DNS address: " usrIP
+        fi
     done
     # Ensure that the IP is not used as a DNS server already
     if [ $(egrep -A5 "dns|WEBPASSWORD" /labs/2.1/docker-compose.yaml /labs/5.3/docker-compose.yaml | grep -iv "#Restricted DNS Fix" | grep $usrIP -c) -gt 0 ]
