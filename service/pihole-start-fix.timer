@@ -1,0 +1,11 @@
+[Unit]
+Description=Attempt to update pihole DNS at the start of the day
+
+[Timer]
+Unit=pihole-start-fix.service
+OnCalendar=
+OnCalendar=*-*-* 07:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target
