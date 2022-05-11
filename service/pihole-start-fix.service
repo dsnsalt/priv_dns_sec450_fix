@@ -1,0 +1,8 @@
+[Unit]
+Description=Lab DNS daily updater
+Requires=default.target
+After=default.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/pihole-dns-updater
