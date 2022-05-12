@@ -1,0 +1,1 @@
+@daily 5 pihole-dns-update.daily /bin/bash /usr/bin/pihole-dns-updater
