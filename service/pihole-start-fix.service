@@ -4,5 +4,7 @@ Requires=default.target
 After=default.target
 
 [Service]
+User=student
+Group=student
 Type=oneshot
 ExecStart=/usr/bin/pihole-dns-updater
