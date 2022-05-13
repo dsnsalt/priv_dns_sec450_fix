@@ -102,7 +102,7 @@ then
         fi
     done
     # Ensure that the IP is not used as a DNS server already
-    if [ $(egrep -A5 "dns|WEBPASSWORD" /labs/2.1/docker-compose.yaml /labs/5.3/docker-compose.yaml | grep -iv "#Restricted DNS Fix" | grep $usrIP -c) -gt 0 ]
+    if [ $(egrep -A5 "dns|WEBPASSWORD" /labs/2.1/docker-compose.yaml /labs/5.3/docker-compose.yaml | grep -ivE "#Restricted DNS.*Fix" | grep $usrIP -c) -gt 0 ]
     then
         echo "Cannot use $usrIP as the DNS server, it already exists as a DNS server in the lab config file"
         exit
@@ -123,14 +123,14 @@ do
 
         # Remove previous instances of the fix
         # Find instance of "#Restricted DNS Fix" comment and delete the line on that
-        if [ $(grep -c "#Restricted DNS Fix" docker-compose.yaml) -gt 0 ]
+        if [ $(grep -c "#Restricted DNS.*Fix" docker-compose.yaml) -gt 0 ]
         then
-            sed -i '/#Restricted DNS Fix/d' docker-compose.yaml
+            sed -i '/#Restricted DNS.*Fix/d' docker-compose.yaml
         fi
 
         # Add lines to define DNS config
         sed -i "/dns:/a \      - $usrIP #Restricted DNS Fix" docker-compose.yaml
-        sed -i "/WEBPASSWORD/i \      DNS1: '$usrIP' #Restricted DNS Fix \n      DNS2: 'no' #Restricted DNS Fix \n      PIHOLE_DNS_1: '$usrIP' #Restricted DNS Fix \n      PIHOLE_DNS_2: 'no' #Restricted DNS Fix" docker-compose.yaml
+        sed -i "/WEBPASSWORD/a \      DNS1: '$usrIP' #Restricted DNS Fix \n      DNS2: 'no' #Restricted DNS Fix \n      PIHOLE_DNS_1: '$usrIP' #Restricted DNS Fix \n      PIHOLE_DNS_2: 'no' #Restricted DNS Fix" docker-compose.yaml
 
         echo "Fix applied to $lab"
     else
@@ -141,9 +141,9 @@ do
         fi
 
         # Ensure DNS definitions are deleted in the case the backups were corrupted
-        if [ $(grep -c "#Restricted DNS Fix" docker-compose.yaml) -gt 0 ]
+        if [ $(grep -c "#Restricted DNS.*Fix" docker-compose.yaml) -gt 0 ]
         then
-            sed -i '/#Restricted DNS Fix/d' docker-compose.yaml
+            sed -i '/#Restricted DNS.*Fix/d' docker-compose.yaml
         fi
         
         echo "Fix has been removed from $lab"
