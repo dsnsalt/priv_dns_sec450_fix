@@ -7,10 +7,9 @@ Use if there are DNS restrictions on your network that prevents starting pi-hole
 ## Download and Run
 
 ```
-wget https://raw.githubusercontent.com/dsnsalt/priv_dns_sec450_fix/main/pihole-start-fix.sh -O /labs/pihole-start-fix.sh
-cd /labs
-chmod +x pihole-start-fix.sh
-./pihole-start-fix.sh
+wget https://raw.githubusercontent.com/dsnsalt/priv_dns_sec450_fix/main/pihole-start-fix.sh -O /home/student/pihole-start-fix.sh
+chmod +x /home/student/pihole-start-fix.sh
+/home/student/pihole-start-fix.sh
 ```
 
 ## Requirements
@@ -117,4 +116,4 @@ Cannot use 192.168.0.50 as the DNS server, it already exists as a DNS server in 
 
 **Fix**:
 
-- Specify a different VM or reset the labs use the lab reset script.
+- Specify a different IP or reset the labs using the lab reset script.
