@@ -76,8 +76,16 @@ defGatewayFlag=false
 # Get the DNS server used by the VM
 if [ $action = "apply" ]
 then
-    echo "Attempting to use system DNS server as replacement DNS for Pihole container."
-    usrIP=$(systemd-resolve --status | grep -m1 -Po 'DNS Servers: \K(\d{1,3}\.){3}\d{1,3}')
+    # Testing if fix is required. If it is, get the VM's default DNS otherwise exit without applying the fix.
+    echo "Testing if fix is necessary for the completion of the labs."
+    if [ $(dig @8.8.8.8 sec450.com A +time=10 +tries=1 | grep "connection timed out" -c) -gt 0 ]
+    then
+        echo "Attempting to use system DNS server as replacement DNS for Pihole container."
+        usrIP=$(systemd-resolve --status | grep -m1 -Po 'DNS Servers: \K(\d{1,3}\.){3}\d{1,3}')
+    else
+        echo "DNS requests are not blocked to external servers. This fix is not necessary to complete the labs."
+        exit
+    fi
 fi
 
 
