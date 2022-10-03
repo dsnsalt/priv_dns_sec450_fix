@@ -2,7 +2,7 @@
 Description=Attempt to update pihole DNS at the start of the day
 
 [Timer]
-Unit=pihole-start-fix.service
+Unit=pihole-dns-update.service
 OnCalendar=
 OnCalendar=*-*-* 07:00:00
 Persistent=true
